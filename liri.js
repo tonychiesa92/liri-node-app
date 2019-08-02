@@ -32,14 +32,14 @@ function concertThis() {
     // Store all of the arguments in an array
     var nodeArgs = process.argv;
 
-    // Create an empty variable for holding the movie name
+    // Create an empty variable for holding the artist/band names
     var artist = "";
 
     // Loop through all the words in the node argument
     // And do a little for-loop magic to handle the inclusion of "+"s
-    for (var i = 2; i < nodeArgs.length; i++) {
+    for (var i = 3; i < nodeArgs.length; i++) {
 
-        if (i > 2 && i < nodeArgs.length) {
+        if (i > 3 && i < nodeArgs.length) {
             artist = artist + "+" + nodeArgs[i];
         } else {
             artist += nodeArgs[i];
@@ -47,17 +47,14 @@ function concertThis() {
         }
     }
 
-    // Then run a request with axios to the OMDB API with the movie specified
+    // Then run a request with axios to the Bands In Town API with the artist/band specified
     var queryUrl = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
-
-    // This line is just to help us debug against the actual URL.
-    console.log(queryUrl);
 
     axios.get(queryUrl).then(
         function (response) {
-            console.log("Venue: " + response.data.venue.name);
-            console.log("City: " + response.data.venue.city);
-            console.log("Date: " + response.data.datetime);
+            console.log("Venue: " + response.data[0].venue.name);
+            console.log("City: " + response.data[0].venue.city);
+            console.log("Date: " + response.data[0].datetime);
         })
         .catch(function (error) {
             if (error.response) {
@@ -83,17 +80,10 @@ function concertThis() {
 
 function movieThis() {
 
-    // Include the axios npm package (Don't forget to run "npm install axios" in this folder first!)
     var axios = require("axios");
-
-    // Store all of the arguments in an array
     var nodeArgs = process.argv;
-
-    // Create an empty variable for holding the movie name
     var movieName = "";
 
-    // Loop through all the words in the node argument
-    // And do a little for-loop magic to handle the inclusion of "+"s
     for (var i = 3; i < nodeArgs.length; i++) {
 
         if (i > 3 && i < nodeArgs.length) {
@@ -104,11 +94,7 @@ function movieThis() {
         }
     }
 
-    // Then run a request with axios to the OMDB API with the movie specified
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
-
-    // This line is just to help us debug against the actual URL.
-    console.log(queryUrl);
 
     axios.get(queryUrl).then(
         function (response) {
@@ -123,8 +109,7 @@ function movieThis() {
         })
         .catch(function (error) {
             if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
+                
                 console.log("---------------Data---------------");
                 console.log(error.response.data);
                 console.log("---------------Status---------------");
@@ -132,11 +117,10 @@ function movieThis() {
                 console.log("---------------Status---------------");
                 console.log(error.response.headers);
             } else if (error.request) {
-                // The request was made but no response was received
-                // `error.request` is an object that comes back with details pertaining to the error that occurred.
+                
                 console.log(error.request);
             } else {
-                // Something happened in setting up the request that triggered an Error
+                
                 console.log("Error", error.message);
             }
             console.log(error.config);
