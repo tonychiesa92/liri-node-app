@@ -6,6 +6,7 @@ var spotify = new Spotify(keys.spotify);
 
 var action = process.argv[2];
 var value = process.argv[3];
+
 switch (action) {
     case "concert-this":
         concertThis();
@@ -25,7 +26,7 @@ switch (action) {
 }
 
 function concertThis() {
-    
+
     // Include the axios npm package (Don't forget to run "npm install axios" in this folder first!)
     var axios = require("axios");
 
@@ -78,6 +79,38 @@ function concertThis() {
         });
 }
 
+function spotifyThis() {
+
+    var nodeArgs = process.argv;
+    var songName = "";
+
+    for (var i = 3; i < nodeArgs.length; i++) {
+
+        if (i > 3 && i < nodeArgs.length) {
+            songName = songName + "+" + nodeArgs[i];
+        } else {
+            songName += nodeArgs[i];
+
+        }
+    }
+
+    spotify
+        .search({ type: 'track', query: songName })
+        .then(function (response) {
+            console.log("Artist: " + response.tracks.items[0].artists[0].name);
+            console.log("Song: " + response.tracks.items[0].name);
+            console.log("Preview: " + response.tracks.items[3].preview_url);
+            console.log("Album: " + response.tracks.items[0].album.name);
+            
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+        
+}
+
+
+
 function movieThis() {
 
     var axios = require("axios");
@@ -109,7 +142,7 @@ function movieThis() {
         })
         .catch(function (error) {
             if (error.response) {
-                
+
                 console.log("---------------Data---------------");
                 console.log(error.response.data);
                 console.log("---------------Status---------------");
@@ -117,10 +150,10 @@ function movieThis() {
                 console.log("---------------Status---------------");
                 console.log(error.response.headers);
             } else if (error.request) {
-                
+
                 console.log(error.request);
             } else {
-                
+
                 console.log("Error", error.message);
             }
             console.log(error.config);
