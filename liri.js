@@ -58,7 +58,7 @@ function concertThis() {
 
     axios.get(queryUrl).then(
         function (response) {
-            
+
             console.log("Venue: " + response.data[0].venue.name);
             console.log("City: " + response.data[0].venue.city);
             console.log("Date: " + moment().format("MM/DD/YYYY"));// NEED TO USE MOMENT TO FORMAT "MM/DD/YYYY"
@@ -132,12 +132,16 @@ function movieThis() {
     var nodeArgs = process.argv;
     var movieName = "";
 
-    for (var i = 3; i < nodeArgs.length; i++) {
+    if (nodeArgs.length <= 3) {
+        movieName = "Mr.+Nobody";
+    } else {
+        for (var i = 3; i < nodeArgs.length; i++) {
 
-        if (i > 3 && i < nodeArgs.length) {
-            movieName = movieName + "+" + nodeArgs[i];
-        } else {
-            movieName += nodeArgs[i];
+            if (i > 3 && i < nodeArgs.length) {
+                movieName = movieName + "+" + nodeArgs[i];
+            } else {
+                movieName += nodeArgs[i];
+            }
         }
     }
 
