@@ -4,8 +4,13 @@ var keys = require("./keys.js");
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 
+var moment = require('moment');
+moment().format();
+
 var action = process.argv[2];
-var value = process.argv[3];
+// var value = process.argv[3];
+
+
 
 switch (action) {
     case "concert-this":
@@ -53,9 +58,11 @@ function concertThis() {
 
     axios.get(queryUrl).then(
         function (response) {
+            
             console.log("Venue: " + response.data[0].venue.name);
             console.log("City: " + response.data[0].venue.city);
-            console.log("Date: " + response.data[0].datetime);
+            console.log("Date: " + moment().format("MM/DD/YYYY"));// NEED TO USE MOMENT TO FORMAT "MM/DD/YYYY"
+
         })
         .catch(function (error) {
             if (error.response) {
@@ -84,29 +91,36 @@ function spotifyThis() {
     var nodeArgs = process.argv;
     var songName = "";
 
-    for (var i = 3; i < nodeArgs.length; i++) {
+    // If no song is provided then your program will default to "The Sign" by Ace of Base.
 
-        if (i > 3 && i < nodeArgs.length) {
-            songName = songName + "+" + nodeArgs[i];
-        } else {
-            songName += nodeArgs[i];
+    if (nodeArgs.length <= 3) {
+        songName = "the+sign+ace+of+base";
+    } else {
 
+        for (var i = 3; i < nodeArgs.length; i++) {
+            if (i > 3 && i < nodeArgs.length) {
+                songName = songName + "+" + nodeArgs[i];
+            } else {
+                songName += nodeArgs[i];
+            }
         }
     }
 
     spotify
         .search({ type: 'track', query: songName })
+
         .then(function (response) {
+
             console.log("Artist: " + response.tracks.items[0].artists[0].name);
             console.log("Song: " + response.tracks.items[0].name);
             console.log("Preview: " + response.tracks.items[3].preview_url);
             console.log("Album: " + response.tracks.items[0].album.name);
-            
+
         })
         .catch(function (err) {
             console.log(err);
         });
-        
+
 }
 
 
@@ -114,6 +128,7 @@ function spotifyThis() {
 function movieThis() {
 
     var axios = require("axios");
+
     var nodeArgs = process.argv;
     var movieName = "";
 
@@ -123,7 +138,6 @@ function movieThis() {
             movieName = movieName + "+" + nodeArgs[i];
         } else {
             movieName += nodeArgs[i];
-
         }
     }
 
