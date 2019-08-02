@@ -1,7 +1,11 @@
 require("dotenv").config();
+
 var keys = require("./keys.js");
+var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 
+var action = process.argv[2];
+var value = process.argv[3];
 switch (action) {
     case "concert-this":
         concertThis();
@@ -51,7 +55,9 @@ function concertThis() {
 
     axios.get(queryUrl).then(
         function (response) {
-            console.log("Release Year: " + response.data.Year);
+            console.log("Venue: " + response.data.venue.name);
+            console.log("City: " + response.data.venue.city);
+            console.log("Date: " + response.data.datetime);
         })
         .catch(function (error) {
             if (error.response) {
@@ -88,9 +94,9 @@ function movieThis() {
 
     // Loop through all the words in the node argument
     // And do a little for-loop magic to handle the inclusion of "+"s
-    for (var i = 2; i < nodeArgs.length; i++) {
+    for (var i = 3; i < nodeArgs.length; i++) {
 
-        if (i > 2 && i < nodeArgs.length) {
+        if (i > 3 && i < nodeArgs.length) {
             movieName = movieName + "+" + nodeArgs[i];
         } else {
             movieName += nodeArgs[i];
@@ -106,7 +112,14 @@ function movieThis() {
 
     axios.get(queryUrl).then(
         function (response) {
-            console.log("Release Year: " + response.data.Year);
+            console.log("Movie title: " + response.data.Title);// Movie title
+            console.log("Release Year: " + response.data.Year);// Year movie came out
+            console.log("IMDB rating: " + response.data.imdbRating);// IMDB rating
+            console.log("Rotten Tomatoes rating: " + response.data.Ratings[1].Value);// Rotten Tomatoes rating
+            console.log("Country: " + response.data.Country);// Country where movie was produced
+            console.log("Language: " + response.data.Language);// Language of the movie
+            console.log("Plot: " + response.data.Plot);// Plot of the movie
+            console.log("Actors: " + response.data.Actors);// Actors in the movie
         })
         .catch(function (error) {
             if (error.response) {
