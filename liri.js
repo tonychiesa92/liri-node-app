@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+var fs = require("fs");
+
 var keys = require("./keys.js");
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
@@ -8,26 +10,29 @@ var moment = require('moment');
 moment().format();
 
 var action = process.argv[2];
-// var value = process.argv[3];
+var value = process.argv[3];
+
+userInputs(action);
 
 
+function userInputs(action) {
+    switch (action) {
+        case "concert-this":
+            concertThis();
+            break;
 
-switch (action) {
-    case "concert-this":
-        concertThis();
-        break;
+        case "spotify-this-song":
+            spotifyThis();
+            break;
 
-    case "spotify-this-song":
-        spotifyThis();
-        break;
+        case "movie-this":
+            movieThis();
+            break;
 
-    case "movie-this":
-        movieThis();
-        break;
-
-    case "do-what-it-says":
-        doWhatItSays();
-        break;
+        case "do-what-it-says":
+            doWhatItSays();
+            break;
+    }
 }
 
 function concertThis() {
@@ -61,7 +66,7 @@ function concertThis() {
 
             console.log("Venue: " + response.data[0].venue.name);
             console.log("City: " + response.data[0].venue.city);
-            console.log("Date: " + moment().format("MM/DD/YYYY"));// NEED TO USE MOMENT TO FORMAT "MM/DD/YYYY"
+            console.log("Date: " + moment().format("MM/DD/YYYY"));
 
         })
         .catch(function (error) {
@@ -124,7 +129,6 @@ function spotifyThis() {
 }
 
 
-
 function movieThis() {
 
     var axios = require("axios");
@@ -176,4 +180,19 @@ function movieThis() {
             }
             console.log(error.config);
         });
+}
+
+
+function doWhatItSays() {
+
+    fs.readFile('random.txt', 'utf8', function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        var dataArr = data.split(',');
+        console.log(dataArr);
+       process.argv[3]=dataArr[1];
+       console.log(process.argv[3]);
+        userInputs(dataArr[0]);
+    });
 }
