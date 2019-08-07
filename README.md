@@ -100,4 +100,14 @@ LIRI makes searches to the Spotify, Bands In Town, and OMDB APIs and will give b
 
 ### Examples of the app working
 
+Here is an example of movie-this running with the default and with a query.
 ![Image of movie-this](./images/movie-this.PNG)
+
+Here is an example of concert-this running with query.
+![Image of concert-this](./images/concert-this.PNG)
+
+Here is an example of spotify-this-song running with default and with a query.
+![Image of spotify-this-song](./images/spotify-this-song.PNG)
+
+Here is an example of do-what-it-says running with two different random.txt entries
+![Image of do-what-it-says](./images/do-what-it-says.PNG)
