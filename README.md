@@ -99,3 +99,5 @@ LIRI makes searches to the Spotify, Bands In Town, and OMDB APIs and will give b
 
 
 ### Examples of the app working
+
+![Image of movie-this](./images/movie-this.PNG)
