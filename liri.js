@@ -7,7 +7,7 @@ var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 
 var moment = require('moment');
-moment().format();
+
 
 var action = process.argv[2];
 var value = process.argv[3];
