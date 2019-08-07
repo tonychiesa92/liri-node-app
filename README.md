@@ -2,7 +2,9 @@
 
 ### Overview
 
-LIRI is a command line node application that takes in parameters and gives back data.
+LIRI stands for _Language_ Interpretation and Recognition Interface. LIRI is a CLI node application that takes in parameters and gives back data.
+
+LIRI makes searches to the Spotify, Bands In Town, and OMDB APIs and will give back predefined information
 
 ### Technologies
 
@@ -94,3 +96,6 @@ LIRI is a command line node application that takes in parameters and gives back 
    * Using the `fs` Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
 
      * It should run `spotify-this-song` for "I Want it That Way," as follows the text in `random.txt`.
+
+
+### Examples of the app working

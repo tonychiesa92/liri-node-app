@@ -8,7 +8,6 @@ var spotify = new Spotify(keys.spotify);
 
 var moment = require('moment');
 
-
 var action = process.argv[2];
 var value = process.argv[3];
 
@@ -190,9 +189,9 @@ function doWhatItSays() {
             return console.log(err);
         }
         var dataArr = data.split(',');
-        console.log(dataArr);
+        
        process.argv[3]=dataArr[1];
-       console.log(process.argv[3]);
+       
         userInputs(dataArr[0]);
     });
 }
